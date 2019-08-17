@@ -7,7 +7,7 @@
 
 > `pkg.module supported`, which means that you can apply tree-shaking in you project
 
-A router guard component for react-router v4
+A higher-order component for react-router v4 that implements routing guards
 
 ## repository
 https://github.com/livelybone/react-router-guard.git
@@ -37,7 +37,7 @@ See in [index.d.ts](./index.d.ts)
 
 ## Usage
 ```js
-import * as RouterGuard from 'router-guard'
+import RouterGuard from 'router-guard'
 ```
 
 Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/router-guard/lib/umd/)
@@ -47,8 +47,6 @@ Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/router-guar
 ```
 
 ## Props
-
-### Common
 | Name                      | Type                                      | DefaultValue                                  | Description  |
 | ------------------------- | ----------------------------------------- | --------------------------------------------- | ------------ |
 | `prop`                    | `type`                                    | none                                          | Description |

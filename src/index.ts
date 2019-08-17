@@ -1,3 +1,1 @@
-import RouterGuard from './components/Index'
-
-export default RouterGuard
+export { RouterGuard, GlobalConfig } from './components/Index'
