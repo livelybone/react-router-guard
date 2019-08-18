@@ -1,7 +1,7 @@
 # router-guard
 [![NPM Version](http://img.shields.io/npm/v/router-guard.svg?style=flat-square)](https://www.npmjs.com/package/router-guard)
 [![Download Month](http://img.shields.io/npm/dm/router-guard.svg?style=flat-square)](https://www.npmjs.com/package/router-guard)
-![gzip with dependencies: kb](https://img.shields.io/badge/gzip--with--dependencies-kb-brightgreen.svg "gzip with dependencies: kb")
+![gzip with dependencies: 1.3kb](https://img.shields.io/badge/gzip--with--dependencies-1.3kb-brightgreen.svg "gzip with dependencies: 1.3kb")
 ![typescript](https://img.shields.io/badge/typescript-supported-blue.svg "typescript")
 ![pkg.module](https://img.shields.io/badge/pkg.module-supported-blue.svg "pkg.module")
 
@@ -44,6 +44,7 @@ import { RouterGuard, GlobalConfig } from 'router-guard'
 
 GlobalConfig.guard = (to, next) => {
   if(to.meta.needAuth && !authorized) {
+    // pushState '/sign-in'
     next('/sign-in')
     
     // or 
@@ -70,6 +71,9 @@ const Layout: React.FC = () => {
 
 ReactDOM.render(<Layout />, document.getElementById('root'))
 ```
+
+### One Route one guard
+You can custom the guard and pendingPlaceholder to cover the global config on a Route
 
 Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/router-guard/lib/umd/)
 ```html
