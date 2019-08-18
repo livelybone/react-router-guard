@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { RouteComponentProps, RouteProps, StaticContext } from 'react-router'
+import { RouteComponentProps, RouteProps } from 'react-router'
 
 export declare type Path =
   | string
@@ -8,11 +8,22 @@ export declare type Path =
       replace?: boolean
     }
 
+/**
+ * The meta info of the route
+ * */
+export declare type Meta =
+  | {
+      [key in string | number]: any
+    }
+  | null
+
 export declare type RouteInfo = {
   [key in Exclude<
     keyof RouteComponentProps,
     'history'
   >]: RouteComponentProps[key]
+} & {
+  meta: Meta
 }
 
 export interface Guard {
@@ -22,8 +33,9 @@ export interface Guard {
    * @param next          The guard will decides which route to take when the function is called
    *
    *                      --- const $path = typeof path === 'string' ? { path, replace: false } : path
+   *                          const { location: { pathname, search, hash } } = this.props
    *
-   *                      if (!$path || matchPath($path.path, this.props.match.path)), then use the current route
+   *                      if (!$path || $path.path === pathname + search + hash), then use the current route
    *                      else if ($path.replace), then replace the path to the history
    *                      else if (!$path.replace), then push the path to the history
    * */
@@ -35,10 +47,7 @@ export interface GlobalConfigT {
   pendingPlaceholder: (() => ReactNode) | null
 }
 
-declare const GlobalConfig: {
-  guard: null
-  pendingPlaceholder: null
-}
+declare const GlobalConfig: GlobalConfigT
 
 declare enum Status {
   Pending = 0,
@@ -49,6 +58,8 @@ declare enum Status {
  * @param PageComponent
  *        The component you truly want to render
  *
+ * @param meta
+ *
  * @param guard
  *        The guard that decides which route to take
  *
@@ -58,22 +69,22 @@ declare enum Status {
  *        The placeholder shows until the guard call the function `next`
  *
  *        default: GlobalConfig.pendingPlaceholder
+ *
+ * @return If guard is null, return PageComponent directly
+ *         else return a wrapped guard component
  * */
 declare function RouterGuard(
   PageComponent: RouteProps['component'],
+  meta?: Meta,
   guard?: GlobalConfigT['guard'],
   pendingPlaceholder?: GlobalConfigT['pendingPlaceholder'],
 ):
-  | React.ComponentClass<RouteComponentProps<any, StaticContext, any>, any>
-  | React.FunctionComponent<RouteComponentProps<any, StaticContext, any>>
-  | React.ComponentClass<any, any>
-  | React.FunctionComponent<any>
+  | typeof PageComponent
   | React.ComponentClass<
-      RouteComponentProps<any, StaticContext, any>,
+      RouteComponentProps<any>,
       {
         status: Status
       }
     >
-  | undefined
 
 export { GlobalConfig, RouterGuard }

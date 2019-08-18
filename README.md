@@ -36,8 +36,39 @@ npm i -S router-guard
 See in [index.d.ts](./index.d.ts)
 
 ## Usage
-```js
-import RouterGuard from 'router-guard'
+```typescript jsx
+import React from 'react'
+import { Route } from 'react-router'
+import ReactDOM, { BrowserRouter } from 'react-router-dom'
+import { RouterGuard, GlobalConfig } from 'router-guard'
+
+GlobalConfig.guard = (to, next) => {
+  if(to.meta.needAuth && !authorized) {
+    next('/sign-in')
+    
+    // or 
+    // next({ path: '/sign-in', replace: true } )
+  } else {
+    next()
+  }
+}
+
+GlobalConfig.pendingPlaceholder = () => 'Loading...'
+
+const Dashboard: React.FC = () => <div>dashboard</div>
+
+const SignIn: React.FC = () => <div className="sign-in">sign-in</div>
+
+const Layout: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <Route path="/some-path" component={RouterGuard(Dashboard, { needAuth: true })} />
+      <Route path="/sign-in" component={RouterGuard(Dashboard)} />
+    </BrowserRouter>
+  )
+}
+
+ReactDOM.render(<Layout />, document.getElementById('root'))
 ```
 
 Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/router-guard/lib/umd/)
@@ -45,40 +76,3 @@ Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/router-guar
 <-- use what you want -->
 <script src="https://unpkg.com/router-guard/lib/umd/<--module-->.js"></script>
 ```
-
-## Props
-| Name                      | Type                                      | DefaultValue                                  | Description  |
-| ------------------------- | ----------------------------------------- | --------------------------------------------- | ------------ |
-| `prop`                    | `type`                                    | none                                          | Description |
-
-
-## Events
-| Name              | EmittedData           | Description                                       |
-| ----------------- | --------------------- | ------------------------------------------------- |
-| `event`           | `type`                |  |
-
-## style
-For building style, you can use the css or scss file in lib directory.
-```js
-// scss
-import 'node_modules/router-guard/lib/css/index.scss'
-
-// css
-import 'node_modules/router-guard/lib/css/index.css'
-```
-Or
-```scss
-// scss
-@import 'node_modules/router-guard/lib/css/index.scss'
-
-// css
-@import 'node_modules/router-guard/lib/css/index.css'
-```
-
-Or, you can build your custom style by copying and editing `index.scss`
-
-## QA
-
-1. Error `Error: spawn node-sass ENOENT`
-
-> You may need install node-sass globally, `npm i -g node-sass`

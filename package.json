@@ -1,7 +1,7 @@
 {
   "name": "router-guard",
-  "version": "0.0.1",
-  "description": "A router guard component for react-router v4",
+  "version": "1.0.0",
+  "description": "A higher-order component for react-router v4 that implements routing guards",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",
   "unpkg": "./lib/umd/index.js",
@@ -25,7 +25,7 @@
     "react",
     "router guard",
     "react-router v4",
-    "component"
+    "higher-order component"
   ],
   "author": "2631541504@qq.com",
   "license": "MIT",
@@ -42,6 +42,7 @@
     "@livelybone/singleton": "^1.1.1",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
+    "@types/react-router-dom": "^4.3.4",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
     "babel-eslint": "^10.0.2",
@@ -103,7 +104,6 @@
     ]
   },
   "dependencies": {
-    "@types/react-router-dom": "^4.3.4",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   }
