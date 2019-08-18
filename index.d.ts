@@ -17,12 +17,7 @@ export declare type Meta =
     }
   | null
 
-export declare type RouteInfo = {
-  [key in Exclude<
-    keyof RouteComponentProps,
-    'history'
-  >]: RouteComponentProps[key]
-} & {
+export declare type RouteInfo = RouteComponentProps & {
   meta: Meta
 }
 

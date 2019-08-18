@@ -1,6 +1,6 @@
 {
   "name": "router-guard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A higher-order component for react-router v4 that implements routing guards",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",

@@ -12,12 +12,7 @@ type Meta =
     }
   | null
 
-type RouteInfo = {
-  [key in Exclude<
-    keyof RouteComponentProps,
-    'history'
-  >]: RouteComponentProps[key]
-} & { meta: Meta }
+type RouteInfo = RouteComponentProps & { meta: Meta }
 
 interface Guard {
   /**
@@ -91,9 +86,8 @@ function RouterGuard(
 
       this.state = { status: Status.Pending }
 
-      const { match, location, staticContext } = props
       const $guard = guard as Guard
-      $guard({ match, location, staticContext, meta }, this.next)
+      $guard(Object.assign({}, props, { meta }), this.next)
     }
 
     componentDidMount() {
