@@ -40,9 +40,9 @@ See in [index.d.ts](./index.d.ts)
 import React from 'react'
 import { Route } from 'react-router'
 import ReactDOM, { BrowserRouter } from 'react-router-dom'
-import { RouterGuard, GlobalConfig } from 'router-guard'
+import { RouterGuard } from 'router-guard'
 
-GlobalConfig.guard = (to, next) => {
+RouterGuard.guard = (to, next) => {
   if(to.meta.needAuth && !authorized) {
     // pushState '/sign-in'
     next('/sign-in')
@@ -54,7 +54,7 @@ GlobalConfig.guard = (to, next) => {
   }
 }
 
-GlobalConfig.pendingPlaceholder = () => 'Loading...'
+RouterGuard.pendingPlaceholder = () => 'Loading...'
 
 const Dashboard: React.FC = () => <div>dashboard</div>
 

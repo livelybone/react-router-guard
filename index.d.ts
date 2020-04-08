@@ -50,12 +50,12 @@ declare enum Status {
  * @param guard
  *        The guard that decides which route to take
  *
- *        default: GlobalConfig.guard
+ *        default: RouterGuard.guard
  *
  * @param pendingPlaceholder
  *        The placeholder shows until the guard call the function `next`
  *
- *        default: GlobalConfig.pendingPlaceholder
+ *        default: RouterGuard.pendingPlaceholder
  *
  * @return If guard is null, return PageComponent directly
  *         else return a wrapped guard component
