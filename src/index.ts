@@ -1,1 +1,2 @@
-export { RouterGuard, GlobalConfig } from './components/Index'
+export * from './components/Index'
+export * from './type'

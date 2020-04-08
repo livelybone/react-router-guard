@@ -1,27 +1,19 @@
+import { LocationDescriptorObject, LocationState } from 'history'
 import React, { ReactNode } from 'react'
-import { RouteComponentProps, RouteProps } from 'react-router'
+import { RouteComponentProps, RouteProps, StaticContext } from 'react-router'
 
-export declare type Path =
-  | string
-  | {
-      path: string
-      replace?: boolean
-    }
-
+declare type Path = string | LocationDescriptorObject<LocationState>
 /**
  * The meta info of the route
  * */
-export declare type Meta =
-  | {
-      [key in string | number]: any
-    }
-  | null
-
-export declare type RouteInfo = RouteComponentProps & {
+declare type Meta = {
+  [key in string | number]: any
+}
+declare type RouteInfo = RouteComponentProps & {
   meta: Meta
 }
 
-export interface Guard {
+interface Guard {
   /**
    * @param to            Current route info
    *
@@ -34,15 +26,15 @@ export interface Guard {
    *                      else if ($path.replace), then replace the path to the history
    *                      else if (!$path.replace), then push the path to the history
    * */
-  (to: RouteInfo, next: (path?: Path) => void): void
+  (to: RouteInfo, next: (path?: Path, replace?: boolean) => void): void
 }
 
-export interface GlobalConfigT {
+interface GuardConfig {
   guard: Guard | null
-  pendingPlaceholder: (() => ReactNode) | null
+  pendingPlaceholder:
+    | ((props: RouteComponentProps<any>, meta?: Meta | null) => ReactNode)
+    | null
 }
-
-declare const GlobalConfig: GlobalConfigT
 
 declare enum Status {
   Pending = 0,
@@ -70,9 +62,9 @@ declare enum Status {
  * */
 declare function RouterGuard(
   PageComponent: RouteProps['component'],
-  meta?: Meta,
-  guard?: GlobalConfigT['guard'],
-  pendingPlaceholder?: GlobalConfigT['pendingPlaceholder'],
+  meta?: Meta | null,
+  guard?: GuardConfig['guard'],
+  pendingPlaceholder?: GuardConfig['pendingPlaceholder'],
 ):
   | typeof PageComponent
   | React.ComponentClass<
@@ -82,4 +74,14 @@ declare function RouterGuard(
       }
     >
 
-export { GlobalConfig, RouterGuard }
+declare namespace RouterGuard {
+  var guard: Guard | null
+  var pendingPlaceholder:
+    | ((
+        props: RouteComponentProps<any, StaticContext, any>,
+        meta?: Meta | null | undefined,
+      ) => React.ReactNode)
+    | null
+}
+
+export { Guard, GuardConfig, Meta, Path, RouteInfo, RouterGuard, Status }
